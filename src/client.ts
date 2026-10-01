@@ -49,7 +49,9 @@ export class TechmapClient {
       const hint = res.status === 401 || res.status === 403
         ? ' Check TECHMAP_RAPIDAPI_KEY and that the key is subscribed to the Techmap Jobs API (free plan available at https://rapidapi.com/techmap-io-techmap-io-default/api/daily-international-job-postings).'
         : res.status === 429 ? ' Rate limit or monthly quota reached.' : ''
-      throw new TechmapApiError(`Techmap API returned HTTP ${res.status}: ${body.slice(0, 300)}${hint}`, res.status)
+    const planHint = res.status === 403 && /subscription plan/i.test(body)
+      ? ' This endpoint needs a PRO, ULTRA or MEGA plan of the Techmap Jobs API.' : ''
+      throw new TechmapApiError(`Techmap API returned HTTP ${res.status}: ${body.slice(0, 300)}${planHint || hint}`, res.status)
     }
     try {
       return JSON.parse(body)
@@ -64,6 +66,11 @@ export class TechmapClient {
 
   count(params: SearchParams) {
     return this.get('/api/v2/jobs/count', params)
+  }
+
+  // Distinct values of a filter field in the last 30 days (PRO plan or higher).
+  distinct(field: string) {
+    return this.get('/api/v2/meta/jobs/distinct', { field })
   }
 }
 

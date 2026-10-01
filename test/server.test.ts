@@ -28,7 +28,7 @@ async function connect(client?: TechmapClient) {
 test('lists the three tools', async () => {
   const mcp = await connect()
   const { tools } = await mcp.listTools()
-  assert.deepEqual(tools.map((t) => t.name).sort(), ['count_jobs', 'get_rss_feed_url', 'search_jobs'])
+  assert.deepEqual(tools.map((t) => t.name).sort(), ['count_jobs', 'get_rss_feed_url', 'list_filter_values', 'search_jobs'])
 })
 
 test('search_jobs sends filters and RapidAPI headers, returns summarized jobs', async () => {
@@ -102,4 +102,23 @@ test('search_jobs sorts by newest unless the caller sets sort', async () => {
   await mcp.callTool({ name: 'search_jobs', arguments: { countryCode: 'lu', sort: 'oldest' } })
   assert.equal(new URL(calls[0].url).searchParams.get('sort'), 'newest')
   assert.equal(new URL(calls[1].url).searchParams.get('sort'), 'oldest')
+})
+
+test('list_filter_values returns the top values of a field', async () => {
+  const body = JSON.stringify({ valueCount: 6, values: [{ key: 'n/a', doc_count: 900 }, { key: 'onsite', doc_count: 500 }, { key: 'remote', doc_count: 300 }] })
+  const { fn, calls } = mockFetch(200, body)
+  const mcp = await connect(new TechmapClient('k', fn))
+  const res: any = await mcp.callTool({ name: 'list_filter_values', arguments: { field: 'workPlace', limit: 2 } })
+  const url = new URL(calls[0].url)
+  assert.equal(url.pathname, '/api/v2/meta/jobs/distinct')
+  assert.equal(url.searchParams.get('field'), 'workPlace')
+  assert.deepEqual(res.structuredContent, { field: 'workPlace', valueCount: 6, values: [{ value: 'n/a', count: 900 }, { value: 'onsite', count: 500 }] })
+})
+
+test('list_filter_values explains the plan requirement', async () => {
+  const { fn } = mockFetch(403, 'Forbidden request to the API - You need a higher subscription plan.')
+  const mcp = await connect(new TechmapClient('k', fn))
+  const res: any = await mcp.callTool({ name: 'list_filter_values', arguments: { field: 'industry' } })
+  assert.equal(res.isError, true)
+  assert.match(res.content[0].text, /PRO, ULTRA or MEGA/)
 })

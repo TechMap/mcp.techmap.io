@@ -19,6 +19,7 @@ Use it to ask things like:
 |---|---|---|
 | `search_jobs` | Search postings by country, title, occupation, skills, company, city, work place (remote/hybrid/onsite), contract/work type, language, industry, posting date, salary and direct-employer flags. Returns 10 postings per page. | 1 per page |
 | `count_jobs` | Count postings that match the same filters - for labour market questions. | 1 |
+| `list_filter_values` | List the most common values of a filter field (work place, industry, occupation, skills, company, city …) in the last 30 days with posting counts - to find exact filter values or the top companies/skills. Needs a PRO plan or higher. | 1 |
 | `get_rss_feed_url` | Build a filtered RSS feed URL for job board backfill (with a key placeholder). | none |
 
 ## Setup
