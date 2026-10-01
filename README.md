@@ -2,6 +2,8 @@
 
 <!-- mcp-name: io.github.TechMap/job-postings -->
 
+[![smithery badge](https://smithery.ai/badge/techmap/job-postings)](https://smithery.ai/servers/techmap/job-postings)
+
 An [MCP](https://modelcontextprotocol.io) server that gives AI assistants and agents access to [Techmap](https://jobdatafeeds.com)'s job postings data: about 8 million new postings per month from 185 sources (company career pages and ATS platforms, job boards, aggregators and public employment offices) in 250 countries and territories, with history since 2020.
 
 Use it to ask things like:
@@ -43,6 +45,8 @@ Use it to ask things like:
 ```bash
 claude mcp add techmap-jobs -e TECHMAP_RAPIDAPI_KEY=your-rapidapi-key -- npx -y @techmap/mcp-server
 ```
+
+**Smithery**: install from [smithery.ai/servers/techmap/job-postings](https://smithery.ai/servers/techmap/job-postings) and enter your RapidAPI key when asked.
 
 Your key stays on your machine; the server only sends it to RapidAPI. Usage is billed by RapidAPI on your own plan.
 

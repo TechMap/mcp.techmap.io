@@ -82,3 +82,15 @@ test('get_rss_feed_url builds a URL without leaking a key', async () => {
   assert.ok(url.includes('{YOUR_RAPIDAPI_KEY}'))
   assert.ok(!url.includes('secret-key'))
 })
+
+test('tools declare output schemas and return structuredContent', async () => {
+  const { fn } = mockFetch()
+  const mcp = await connect(new TechmapClient('k', fn))
+  const { tools } = await mcp.listTools()
+  for (const t of tools) assert.equal(t.outputSchema?.type, 'object', t.name)
+  const res: any = await mcp.callTool({ name: 'search_jobs', arguments: { countryCode: 'lu' } })
+  assert.equal(res.structuredContent.totalCount, 374)
+  assert.equal(res.structuredContent.jobs[0].company, 'Example SARL')
+  const count: any = await mcp.callTool({ name: 'count_jobs', arguments: { countryCode: 'lu' } })
+  assert.deepEqual(count.structuredContent, { totalCount: 374 })
+})

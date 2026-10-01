@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "techmap-job-postings",
   "display_name": "Techmap Job Postings",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Search and count job postings from 185 sources in 250 countries (~8M new per month) via Techmap's Jobs API.",
   "long_description": "Search and count job postings from Techmap's Jobs API: filters for title, skills, company, city, country, remote/hybrid, salary and posting date. Requires a RapidAPI key subscribed to the Techmap Jobs API (free plan with 1,000 job postings per month).",
   "author": {
@@ -138,6 +138,103 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "number",
+            "description": "Number of postings matching the filters"
+          },
+          "page": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          },
+          "jobs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "company": {
+                  "type": "string"
+                },
+                "city": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  ]
+                },
+                "state": {
+                  "$ref": "#/properties/jobs/items/properties/city"
+                },
+                "countryCode": {
+                  "$ref": "#/properties/jobs/items/properties/city"
+                },
+                "workPlace": {
+                  "$ref": "#/properties/jobs/items/properties/city"
+                },
+                "workType": {
+                  "$ref": "#/properties/jobs/items/properties/city"
+                },
+                "contractType": {
+                  "$ref": "#/properties/jobs/items/properties/city"
+                },
+                "occupation": {
+                  "$ref": "#/properties/jobs/items/properties/city"
+                },
+                "industry": {
+                  "$ref": "#/properties/jobs/items/properties/city"
+                },
+                "language": {
+                  "$ref": "#/properties/jobs/items/properties/city"
+                },
+                "datePosted": {
+                  "type": "string"
+                },
+                "validThrough": {
+                  "type": "string"
+                },
+                "salary": {
+                  "description": "Salary details from the posting, if any"
+                },
+                "isDirect": {
+                  "type": "boolean"
+                },
+                "isRecruiter": {
+                  "type": "boolean"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description shortened to 600 characters"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        },
+        "required": [
+          "jobs"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "openWorldHint": true
@@ -224,6 +321,17 @@
           "isRecruiter": {
             "type": "boolean",
             "description": "true = only recruiting firms, false = exclude them"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "number",
+            "description": "Number of postings matching the filters"
           }
         },
         "additionalProperties": false,
@@ -320,6 +428,24 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "RSS feed URL with a {YOUR_RAPIDAPI_KEY} placeholder"
+          },
+          "docs": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "docs"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "openWorldHint": false
@@ -330,9 +456,9 @@
     "rapidapi_key": {
       "type": "string",
       "title": "RapidAPI key",
-      "description": "RapidAPI key subscribed to the Techmap Jobs API (free plan: https://rapidapi.com/techmap-io-techmap-io-default/api/daily-international-job-postings)",
+      "description": "RapidAPI key subscribed to the Techmap Jobs API (free plan with 1,000 job postings/month: https://rapidapi.com/techmap-io-techmap-io-default/api/daily-international-job-postings). Without a key, get_rss_feed_url still works.",
       "sensitive": true,
-      "required": true
+      "required": false
     }
   },
   "compatibility": {
