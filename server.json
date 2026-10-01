@@ -1,0 +1,31 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.techmap/job-postings",
+  "title": "Techmap Job Postings",
+  "description": "Search and count job postings from 185 sources in 250 countries (~8M new per month).",
+  "websiteUrl": "https://jobdatafeeds.com",
+  "repository": {
+    "url": "https://github.com/TechMap/mcp.techmap.io",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@techmap/mcp-server",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "TECHMAP_RAPIDAPI_KEY",
+          "description": "RapidAPI key subscribed to the Techmap Jobs API (free plan: 1,000 job postings/month)",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}

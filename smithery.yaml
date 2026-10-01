@@ -1,0 +1,15 @@
+# Smithery configuration for a local (stdio) server published on npm.
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required: [rapidapiKey]
+    properties:
+      rapidapiKey:
+        type: string
+        title: RapidAPI key
+        description: RapidAPI key subscribed to the Techmap Jobs API (free plan with 1,000 job postings/month at https://rapidapi.com/techmap-io-techmap-io-default/api/daily-international-job-postings)
+  commandFunction: |-
+    (config) => ({ command: 'npx', args: ['-y', '@techmap/mcp-server'], env: { TECHMAP_RAPIDAPI_KEY: config.rapidapiKey } })
+  exampleConfig:
+    rapidapiKey: your-rapidapi-key

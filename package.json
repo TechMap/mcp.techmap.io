@@ -1,0 +1,45 @@
+{
+  "name": "@techmap/mcp-server",
+  "version": "0.1.0",
+  "description": "MCP server for Techmap's job postings data: search 8M+ new job postings per month from 185 sources in 250 countries via the Techmap Jobs API.",
+  "mcpName": "io.github.techmap/job-postings",
+  "license": "MIT",
+  "author": "Techmap GmbH <data@techmap.io> (https://jobdatafeeds.com)",
+  "homepage": "https://jobdatafeeds.com",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "job-postings",
+    "jobs",
+    "labor-market",
+    "techmap",
+    "rapidapi"
+  ],
+  "type": "module",
+  "bin": {
+    "techmap-mcp": "build/src/index.js"
+  },
+  "main": "build/src/server.js",
+  "files": [
+    "build/src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && node --test build/test/*.test.js",
+    "start": "node build/src/index.js",
+    "prepublishOnly": "npm test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

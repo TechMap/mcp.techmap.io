@@ -1,0 +1,44 @@
+{
+ "api": "Techmap.io Job Posting API",
+ "apiVersion": "v2.6",
+ "page": 1,
+ "pageSize": 10,
+ "totalCount": 374,
+ "result": [
+  {
+   "title": "Business Controller",
+   "company": "Example SARL",
+   "city": "Luxembourg",
+   "state": "Luxembourg",
+   "countryCode": "lu",
+   "workPlace": [
+    "Hybrid"
+   ],
+   "workType": [
+    "FullTime"
+   ],
+   "contractType": [
+    "N/A"
+   ],
+   "occupation": "Controller",
+   "industry": "Trade",
+   "language": "en",
+   "dateCreated": "2026-09-29T01:22:18.000Z",
+   "hasSalary": false,
+   "isDirect": false,
+   "isRecruiter": false,
+   "jsonLD": {
+    "identifier": "6abb2fe7b71c0428a6b8bbee",
+    "title": "Business Controller",
+    "datePosted": "2026-09-29",
+    "validThrough": "2026-10-29T01:22:18.000Z",
+    "url": "https://example.com/jobs/1",
+    "description": "We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. We are looking for an experienced Business Controller. ",
+    "hiringOrganization": {
+     "@type": "Organization",
+     "name": "Example SARL"
+    }
+   }
+  }
+ ]
+}
