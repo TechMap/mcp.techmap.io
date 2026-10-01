@@ -1,0 +1,348 @@
+{
+  "manifest_version": "0.3",
+  "name": "techmap-job-postings",
+  "display_name": "Techmap Job Postings",
+  "version": "0.1.1",
+  "description": "Search and count job postings from 185 sources in 250 countries (~8M new per month) via Techmap's Jobs API.",
+  "long_description": "Search and count job postings from Techmap's Jobs API: filters for title, skills, company, city, country, remote/hybrid, salary and posting date. Requires a RapidAPI key subscribed to the Techmap Jobs API (free plan with 1,000 job postings per month).",
+  "author": {
+    "name": "Techmap GmbH",
+    "email": "data@techmap.io",
+    "url": "https://jobdatafeeds.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TechMap/mcp.techmap.io"
+  },
+  "homepage": "https://jobdatafeeds.com",
+  "documentation": "https://github.com/TechMap/mcp.techmap.io#readme",
+  "license": "MIT",
+  "keywords": [
+    "jobs",
+    "job-postings",
+    "labor-market",
+    "recruiting",
+    "techmap"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "build/src/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/build/src/index.js"
+      ],
+      "env": {
+        "TECHMAP_RAPIDAPI_KEY": "${user_config.rapidapi_key}"
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "search_jobs",
+      "description": "Search Techmap's job postings (185 sources, 250 countries, ~8M new postings/month). Returns 10 postings per page with title, company, location, work place, posting date, URL and a shortened description. Each page counts as 10 postings against the caller's RapidAPI quota.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2,
+            "description": "ISO 3166-1 alpha-2 country code of the job location, e.g. \"de\", \"us\", \"lu\""
+          },
+          "title": {
+            "type": "string",
+            "description": "Free-text search in the job title, e.g. \"data engineer\""
+          },
+          "occupation": {
+            "type": "string",
+            "description": "Occupation stem extracted from the title, e.g. \"developer\", \"nurse\""
+          },
+          "skills": {
+            "type": "string",
+            "description": "Skill or keyword, e.g. \"python\""
+          },
+          "company": {
+            "type": "string",
+            "description": "Hiring company name"
+          },
+          "city": {
+            "type": "string",
+            "description": "City of the workplace"
+          },
+          "state": {
+            "type": "string",
+            "description": "State/region of the workplace"
+          },
+          "workPlace": {
+            "type": "string",
+            "description": "remote, hybrid, onsite, field or offshore"
+          },
+          "workType": {
+            "type": "string",
+            "description": "fulltime, parttime, flextime …"
+          },
+          "contractType": {
+            "type": "string",
+            "description": "permanent, temporary, internship …"
+          },
+          "industry": {
+            "type": "string",
+            "description": "Industry, e.g. \"healthcare\""
+          },
+          "language": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2,
+            "description": "ISO 639-1 language of the posting, e.g. \"en\""
+          },
+          "dateCreated": {
+            "type": "string",
+            "description": "Day (YYYY-MM-DD) or month (YYYY-MM) the job was posted; defaults to the most recent data"
+          },
+          "dateCreatedMin": {
+            "type": "string",
+            "description": "Start of a posting date range (YYYY-MM-DD)"
+          },
+          "dateCreatedMax": {
+            "type": "string",
+            "description": "End of a posting date range (YYYY-MM-DD)"
+          },
+          "hasSalary": {
+            "type": "boolean",
+            "description": "Only postings with salary information"
+          },
+          "isDirect": {
+            "type": "boolean",
+            "description": "Only postings that link directly to the employer"
+          },
+          "isRecruiter": {
+            "type": "boolean",
+            "description": "true = only recruiting firms, false = exclude them"
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "newest",
+              "oldest"
+            ],
+            "description": "newest = most recently collected jobs first (recommended), oldest = default API order"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Result page (10 postings per page), default 1"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "count_jobs",
+      "description": "Count job postings matching the filters, e.g. how many remote Python jobs were posted in Germany in a month. Useful for labour market questions without fetching postings.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2,
+            "description": "ISO 3166-1 alpha-2 country code of the job location, e.g. \"de\", \"us\", \"lu\""
+          },
+          "title": {
+            "type": "string",
+            "description": "Free-text search in the job title, e.g. \"data engineer\""
+          },
+          "occupation": {
+            "type": "string",
+            "description": "Occupation stem extracted from the title, e.g. \"developer\", \"nurse\""
+          },
+          "skills": {
+            "type": "string",
+            "description": "Skill or keyword, e.g. \"python\""
+          },
+          "company": {
+            "type": "string",
+            "description": "Hiring company name"
+          },
+          "city": {
+            "type": "string",
+            "description": "City of the workplace"
+          },
+          "state": {
+            "type": "string",
+            "description": "State/region of the workplace"
+          },
+          "workPlace": {
+            "type": "string",
+            "description": "remote, hybrid, onsite, field or offshore"
+          },
+          "workType": {
+            "type": "string",
+            "description": "fulltime, parttime, flextime …"
+          },
+          "contractType": {
+            "type": "string",
+            "description": "permanent, temporary, internship …"
+          },
+          "industry": {
+            "type": "string",
+            "description": "Industry, e.g. \"healthcare\""
+          },
+          "language": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2,
+            "description": "ISO 639-1 language of the posting, e.g. \"en\""
+          },
+          "dateCreated": {
+            "type": "string",
+            "description": "Day (YYYY-MM-DD) or month (YYYY-MM) the job was posted; defaults to the most recent data"
+          },
+          "dateCreatedMin": {
+            "type": "string",
+            "description": "Start of a posting date range (YYYY-MM-DD)"
+          },
+          "dateCreatedMax": {
+            "type": "string",
+            "description": "End of a posting date range (YYYY-MM-DD)"
+          },
+          "hasSalary": {
+            "type": "boolean",
+            "description": "Only postings with salary information"
+          },
+          "isDirect": {
+            "type": "boolean",
+            "description": "Only postings that link directly to the employer"
+          },
+          "isRecruiter": {
+            "type": "boolean",
+            "description": "true = only recruiting firms, false = exclude them"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_rss_feed_url",
+      "description": "Build a URL for Techmap's RSS API with the given filters, e.g. to import jobs into job board software (backfill). The URL contains a {YOUR_RAPIDAPI_KEY} placeholder; the key must be subscribed to the Techmap RSS API (free plan: 300 postings/month). No API request is made.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "countryCode": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2,
+            "description": "ISO 3166-1 alpha-2 country code of the job location, e.g. \"de\", \"us\", \"lu\""
+          },
+          "title": {
+            "type": "string",
+            "description": "Free-text search in the job title, e.g. \"data engineer\""
+          },
+          "occupation": {
+            "type": "string",
+            "description": "Occupation stem extracted from the title, e.g. \"developer\", \"nurse\""
+          },
+          "skills": {
+            "type": "string",
+            "description": "Skill or keyword, e.g. \"python\""
+          },
+          "company": {
+            "type": "string",
+            "description": "Hiring company name"
+          },
+          "city": {
+            "type": "string",
+            "description": "City of the workplace"
+          },
+          "state": {
+            "type": "string",
+            "description": "State/region of the workplace"
+          },
+          "workPlace": {
+            "type": "string",
+            "description": "remote, hybrid, onsite, field or offshore"
+          },
+          "workType": {
+            "type": "string",
+            "description": "fulltime, parttime, flextime …"
+          },
+          "contractType": {
+            "type": "string",
+            "description": "permanent, temporary, internship …"
+          },
+          "industry": {
+            "type": "string",
+            "description": "Industry, e.g. \"healthcare\""
+          },
+          "language": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2,
+            "description": "ISO 639-1 language of the posting, e.g. \"en\""
+          },
+          "dateCreated": {
+            "type": "string",
+            "description": "Day (YYYY-MM-DD) or month (YYYY-MM) the job was posted; defaults to the most recent data"
+          },
+          "dateCreatedMin": {
+            "type": "string",
+            "description": "Start of a posting date range (YYYY-MM-DD)"
+          },
+          "dateCreatedMax": {
+            "type": "string",
+            "description": "End of a posting date range (YYYY-MM-DD)"
+          },
+          "hasSalary": {
+            "type": "boolean",
+            "description": "Only postings with salary information"
+          },
+          "isDirect": {
+            "type": "boolean",
+            "description": "Only postings that link directly to the employer"
+          },
+          "isRecruiter": {
+            "type": "boolean",
+            "description": "true = only recruiting firms, false = exclude them"
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false
+      }
+    }
+  ],
+  "user_config": {
+    "rapidapi_key": {
+      "type": "string",
+      "title": "RapidAPI key",
+      "description": "RapidAPI key subscribed to the Techmap Jobs API (free plan: https://rapidapi.com/techmap-io-techmap-io-default/api/daily-international-job-postings)",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  }
+}

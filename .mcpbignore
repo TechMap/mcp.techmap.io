@@ -1,0 +1,12 @@
+src/
+test/
+build/test/
+*.mcpb
+tsconfig.json
+package-lock.json
+server.json
+smithery.yaml
+glama.json
+SUBMISSION.md
+.git/
+.github/
