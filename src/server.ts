@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
 import { TechmapClient, rssFeedUrl, summarizeJob, type SearchParams } from './client.js'
 
-export const VERSION = '0.1.0'
+export const VERSION = '0.1.1'
 
 // Search filters shared by search_jobs, count_jobs and get_rss_feed_url.
 // Names match the Jobs API query parameters (https://api.techmap.io).

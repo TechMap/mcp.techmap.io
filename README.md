@@ -1,6 +1,6 @@
 # Techmap Job Postings MCP Server
 
-<!-- mcp-name: io.github.techmap/job-postings -->
+<!-- mcp-name: io.github.TechMap/job-postings -->
 
 An [MCP](https://modelcontextprotocol.io) server that gives AI assistants and agents access to [Techmap](https://jobdatafeeds.com)'s job postings data: about 8 million new postings per month from 185 sources (company career pages and ATS platforms, job boards, aggregators and public employment offices) in 250 countries and territories, with history since 2020.
 
