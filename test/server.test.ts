@@ -94,3 +94,12 @@ test('tools declare output schemas and return structuredContent', async () => {
   const count: any = await mcp.callTool({ name: 'count_jobs', arguments: { countryCode: 'lu' } })
   assert.deepEqual(count.structuredContent, { totalCount: 374 })
 })
+
+test('search_jobs sorts by newest unless the caller sets sort', async () => {
+  const { fn, calls } = mockFetch()
+  const mcp = await connect(new TechmapClient('k', fn))
+  await mcp.callTool({ name: 'search_jobs', arguments: { countryCode: 'lu' } })
+  await mcp.callTool({ name: 'search_jobs', arguments: { countryCode: 'lu', sort: 'oldest' } })
+  assert.equal(new URL(calls[0].url).searchParams.get('sort'), 'newest')
+  assert.equal(new URL(calls[1].url).searchParams.get('sort'), 'oldest')
+})

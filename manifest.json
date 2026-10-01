@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "techmap-job-postings",
   "display_name": "Techmap Job Postings",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Search and count job postings from 185 sources in 250 countries (~8M new per month) via Techmap's Jobs API.",
   "long_description": "Search and count job postings from Techmap's Jobs API: filters for title, skills, company, city, country, remote/hybrid, salary and posting date. Requires a RapidAPI key subscribed to the Techmap Jobs API (free plan with 1,000 job postings per month).",
   "author": {
@@ -126,7 +126,7 @@
               "newest",
               "oldest"
             ],
-            "description": "newest = most recently collected jobs first (recommended), oldest = default API order"
+            "description": "newest = most recently collected jobs first (default), oldest = stable order for paging through all results"
           },
           "page": {
             "type": "integer",

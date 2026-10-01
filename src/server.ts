@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
 import { TechmapClient, rssFeedUrl, summarizeJob, type SearchParams } from './client.js'
 
-export const VERSION = '0.2.0'
+export const VERSION = '0.2.1'
 
 // Search filters shared by search_jobs, count_jobs and get_rss_feed_url.
 // Names match the Jobs API query parameters (https://api.techmap.io).
@@ -27,7 +27,7 @@ const filters = {
   isRecruiter: z.boolean().optional().describe('true = only recruiting firms, false = exclude them'),
 }
 
-const sortParam = z.enum(['newest', 'oldest']).optional().describe('newest = most recently collected jobs first (recommended), oldest = default API order')
+const sortParam = z.enum(['newest', 'oldest']).optional().describe('newest = most recently collected jobs first (default), oldest = stable order for paging through all results')
 
 function clean(args: Record<string, unknown>): SearchParams {
   const out: SearchParams = {}
@@ -86,7 +86,7 @@ export function createServer(client: TechmapClient | undefined) {
     },
     annotations: { readOnlyHint: true, openWorldHint: true },
   }, async (args) => {
-    const data = await requireClient().search(clean(args))
+    const data = await requireClient().search(clean({ ...args, sort: args.sort ?? 'newest' }))
     return result({
       totalCount: data.totalCount,
       page: data.page,

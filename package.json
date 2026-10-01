@@ -1,6 +1,6 @@
 {
   "name": "@techmap/mcp-server",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MCP server for Techmap's job postings data: search 8M+ new job postings per month from 185 sources in 250 countries via the Techmap Jobs API.",
   "mcpName": "io.github.TechMap/job-postings",
   "license": "MIT",
