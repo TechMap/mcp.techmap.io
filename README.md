@@ -2,7 +2,7 @@
 
 <!-- mcp-name: io.github.TechMap/job-postings -->
 
-[![smithery badge](https://smithery.ai/badge/techmap/job-postings)](https://smithery.ai/servers/techmap/job-postings)
+[![LightNow capabilities](https://lightnow.ai/badge/io.github.TechMap/job-postings)](https://lightnow.ai/servers/io.github.TechMap/job-postings)
 
 An [MCP](https://modelcontextprotocol.io) server that gives AI assistants and agents access to [Techmap](https://jobdatafeeds.com)'s job postings data: about 8 million new postings per month from 185 sources (company career pages and ATS platforms, job boards, aggregators and public employment offices) in 250 countries and territories, with history since 2020.
 
